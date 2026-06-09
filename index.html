@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Text to Voice - Skyroot</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="floating-shapes">
+            <span class="shape shape-1"></span>
+            <span class="shape shape-2"></span>
+            <span class="shape shape-3"></span>
+            <span class="shape shape-4"></span>
+            <span class="shape shape-5"></span>
+            <span class="shape shape-6"></span>
+            <span class="shape shape-7"></span>
+            <span class="shape shape-8"></span>
+        </div>
+        <div class="particles" id="particles"></div>
+    </div>
+
+    <!-- LOGIN PAGE -->
+    <div id="loginPage" class="page active">
+        <div class="auth-container slide-in">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <div class="logo-bounce">
+                        <i class="fas fa-microphone-alt logo-icon"></i>
+                    </div>
+                    <h1 class="glow-text">Text to Voice</h1>
+                    <p class="auth-subtitle fade-in-delay">Transform your words into lifelike speech</p>
+                </div>
+                <form id="loginForm" class="auth-form">
+                    <div class="input-group float-up">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="loginEmail" placeholder="Email Address" required>
+                        <span class="input-highlight"></span>
+                    </div>
+                    <div class="input-group float-up" style="animation-delay:0.1s">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="loginPassword" placeholder="Password" required>
+                        <span class="input-highlight"></span>
+                        <button type="button" class="toggle-pass" onclick="togglePassword('loginPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="remember-forgot fade-in-delay">
+                        <label class="checkbox-custom">
+                            <input type="checkbox"> <span>Remember me</span>
+                        </label>
+                        <a href="#" class="forgot-link">Forgot Password?</a>
+                    </div>
+                    <!-- Captcha -->
+                    <div class="captcha-box float-up" style="animation-delay:0.2s">
+                        <div class="captcha-main">
+                            <label class="checkbox-custom captcha-check" id="captchaLogin">
+                                <input type="checkbox" onchange="handleCaptcha(this, 'loginCaptchaStatus')">
+                                <span class="captcha-checkbox"></span>
+                                <span class="captcha-text">I'm not a robot</span>
+                            </label>
+                            <div class="captcha-logo">
+                                <i class="fas fa-shield-alt" style="font-size:28px;color:rgba(108,99,255,0.5)"></i>
+                            </div>
+                        </div>
+                        <div class="captcha-status" id="loginCaptchaStatus"></div>
+                    </div>
+                    <button type="submit" class="btn-primary pulse-btn" id="loginBtn" disabled>
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+                <div class="auth-divider">
+                    <span>or continue with</span>
+                </div>
+                <div class="social-login">
+                    <button class="social-btn google-btn" onclick="socialLogin('Google')">
+                        <i class="fab fa-google"></i>
+                    </button>
+                    <button class="social-btn apple-btn" onclick="socialLogin('Apple')">
+                        <i class="fab fa-apple"></i>
+                    </button>
+                    <button class="social-btn fb-btn" onclick="socialLogin('Facebook')">
+                        <i class="fab fa-facebook-f"></i>
+                    </button>
+                </div>
+                <p class="auth-switch">Don't have an account? <a href="#" onclick="showPage('signupPage')">Sign Up</a></p>
+                <div class="copyright">
+                    <p>&copy; 2026 All Rights Reserved. <strong>Skyroot</strong> Company</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SIGNUP PAGE -->
+    <div id="signupPage" class="page">
+        <div class="auth-container slide-in">
+            <div class="auth-card signup-card">
+                <div class="auth-header">
+                    <div class="logo-bounce">
+                        <i class="fas fa-user-plus logo-icon"></i>
+                    </div>
+                    <h1 class="glow-text">Create Account</h1>
+                    <p class="auth-subtitle fade-in-delay">Join the voice revolution</p>
+                </div>
+                <form id="signupForm" class="auth-form">
+                    <div class="input-group float-up">
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="signupName" placeholder="Full Name" required>
+                        <span class="input-highlight"></span>
+                    </div>
+                    <div class="input-group float-up" style="animation-delay:0.1s">
+                        <i class="fas fa-envelope input-icon"></i>
+                        <input type="email" id="signupEmail" placeholder="Email Address" required>
+                        <span class="input-highlight"></span>
+                    </div>
+                    <div class="input-group float-up" style="animation-delay:0.15s">
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="tel" id="signupPhone" placeholder="Phone Number">
+                        <span class="input-highlight"></span>
+                    </div>
+                    <div class="input-group float-up" style="animation-delay:0.2s">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="signupPassword" placeholder="Password" required>
+                        <span class="input-highlight"></span>
+                        <button type="button" class="toggle-pass" onclick="togglePassword('signupPassword', this)">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                    <div class="password-strength" id="passwordStrength">
+                        <div class="strength-bar"><div class="strength-fill" id="strengthFill"></div></div>
+                        <span class="strength-text" id="strengthText"></span>
+                    </div>
+                    <div class="input-group float-up" style="animation-delay:0.25s">
+                        <i class="fas fa-lock input-icon"></i>
+                        <input type="password" id="signupConfirm" placeholder="Confirm Password" required>
+                        <span class="input-highlight"></span>
+                    </div>
+                    <!-- Captcha -->
+                    <div class="captcha-box float-up" style="animation-delay:0.3s">
+                        <div class="captcha-main">
+                            <label class="checkbox-custom captcha-check" id="captchaSignup">
+                                <input type="checkbox" onchange="handleCaptcha(this, 'signupCaptchaStatus')">
+                                <span class="captcha-checkbox"></span>
+                                <span class="captcha-text">I'm not a robot</span>
+                            </label>
+                            <div class="captcha-logo">
+                                <i class="fas fa-shield-alt" style="font-size:28px;color:rgba(108,99,255,0.5)"></i>
+                            </div>
+                        </div>
+                        <div class="captcha-status" id="signupCaptchaStatus"></div>
+                    </div>
+                    <button type="submit" class="btn-primary pulse-btn" id="signupBtn" disabled>
+                        <span class="btn-text">Create Account</span>
+                        <span class="btn-loader"><i class="fas fa-spinner fa-spin"></i></span>
+                    </button>
+                </form>
+                <p class="auth-switch">Already have an account? <a href="#" onclick="showPage('loginPage')">Sign In</a></p>
+                <div class="copyright">
+                    <p>&copy; 2026 All Rights Reserved. <strong>Skyroot</strong> Company</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP PAGE -->
+    <div id="appPage" class="page">
+        <!-- Top Navbar -->
+        <nav class="app-navbar">
+            <div class="nav-brand">
+                <i class="fas fa-microphone-alt nav-logo"></i>
+                <span>Text to Voice</span>
+            </div>
+            <div class="nav-actions">
+                <button class="nav-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <button class="nav-btn pro-btn-nav" onclick="showProModal()" title="Go Pro">
+                    <i class="fas fa-crown"></i>
+                </button>
+                <button class="nav-btn" onclick="toggleChatbot()" title="Skyroot AI">
+                    <i class="fas fa-robot"></i>
+                </button>
+                <div class="user-menu" onclick="toggleUserMenu()">
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <span class="user-name" id="userName">User</span>
+                    <span class="pro-badge" id="proBadge" style="display:none">PRO</span>
+                    <i class="fas fa-chevron-down"></i>
+                    <div class="user-dropdown" id="userDropdown">
+                        <a href="#" onclick="showProModal(); return false;"><i class="fas fa-crown"></i> Upgrade to Pro</a>
+                        <a href="#" onclick="showPage('loginPage'); return false;"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="app-content">
+            <div class="main-grid">
+                <!-- Text Input Section -->
+                <div class="tts-card card-animate">
+                    <div class="card-header">
+                        <h2><i class="fas fa-keyboard"></i> Enter Your Text</h2>
+                        <div class="char-count"><span id="charCount">0</span> / 5000</div>
+                    </div>
+                    <div class="card-body">
+                        <textarea id="textInput" class="text-area" placeholder="Type or paste your text here... I can speak in any language!" maxlength="5000" oninput="updateCharCount()"></textarea>
+                        <div class="quick-actions">
+                            <button class="quick-btn" onclick="pasteText()" title="Paste"><i class="fas fa-paste"></i> Paste</button>
+                            <button class="quick-btn" onclick="clearText()" title="Clear"><i class="fas fa-trash"></i> Clear</button>
+                            <button class="quick-btn" onclick="sampleText()" title="Sample"><i class="fas fa-magic"></i> Sample</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voice Settings Section -->
+                <div class="tts-card card-animate" style="animation-delay:0.1s">
+                    <div class="card-header">
+                        <h2><i class="fas fa-sliders-h"></i> Voice Settings</h2>
+                    </div>
+                    <div class="card-body">
+                        <!-- Voice Type Selector -->
+                        <div class="setting-group">
+                            <label class="setting-label"><i class="fas fa-user-circle"></i> Voice Type</label>
+                            <div class="voice-types voice-grid-8">
+                                <button class="voice-type-btn active" data-type="male" onclick="selectVoiceType('male', this)">
+                                    <i class="fas fa-male"></i><span>Male</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="female" onclick="selectVoiceType('female', this)">
+                                    <i class="fas fa-female"></i><span>Female</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="child" onclick="selectVoiceType('child', this)">
+                                    <i class="fas fa-child"></i><span>Kid</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="deep" onclick="selectVoiceType('deep', this)">
+                                    <i class="fas fa-volume-up"></i><span>Deep</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="robot" onclick="selectVoiceType('robot', this)">
+                                    <i class="fas fa-robot"></i><span>Robot</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="whisper" onclick="selectVoiceType('whisper', this)">
+                                    <i class="fas fa-wind"></i><span>Whisper</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="echo" onclick="selectVoiceType('echo', this)">
+                                    <i class="fas fa-broadcast-tower"></i><span>Echo</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="news" onclick="selectVoiceType('news', this)">
+                                    <i class="fas fa-newspaper"></i><span>News</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="narrator" onclick="selectVoiceType('narrator', this)">
+                                    <i class="fas fa-book-open"></i><span>Narrator</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="elder" onclick="selectVoiceType('elder', this)">
+                                    <i class="fas fa-hat-wizard"></i><span>Elder</span>
+                                </button>
+                                <button class="voice-type-btn" data-type="alien" onclick="selectVoiceType('alien', this)">
+                                    <i class="fas fa-user-astronaut"></i><span>Alien</span>
+                                </button>
+                            </div>
+                        </div>
+                        <!-- Voice Dropdown -->
+                        <div class="setting-group">
+                            <label class="setting-label"><i class="fas fa-microphone"></i> Select Voice</label>
+                            <select id="voiceSelect" class="custom-select">
+                                <option>Loading voices...</option>
+                            </select>
+                        </div>
+                        <!-- Language Selector -->
+                        <div class="setting-group">
+                            <label class="setting-label"><i class="fas fa-globe"></i> Language</label>
+                            <select id="languageSelect" class="custom-select" onchange="filterVoicesByLang()">
+                                <option value="all">All Languages</option>
+                            </select>
+                        </div>
+                        <!-- Speed Control -->
+                        <div class="setting-group">
+                            <label class="setting-label"><i class="fas fa-tachometer-alt"></i> Speed: <span id="speedValue">1.0x</span></label>
+                            <input type="range" id="speedRange" class="custom-range" min="0.1" max="3" step="0.1" value="1" oninput="updateSlider('speed')">
+                            <div class="range-labels"><span>Slow</span><span>Normal</span><span>Fast</span></div>
+                        </div>
+                        <!-- Pitch Control -->
+                        <div class="setting-group">
+                            <label class="setting-label"><i class="fas fa-music"></i> Pitch: <span id="pitchValue">1.0</span></label>
+                            <input type="range" id="pitchRange" class="custom-range pitch-range" min="0" max="2" step="0.1" value="1" oninput="updateSlider('pitch')">
+                            <div class="range-labels"><span>Low</span><span>Normal</span><span>High</span></div>
+                        </div>
+                        <!-- Volume Control -->
+                        <div class="setting-group">
+                            <label class="setting-label"><i class="fas fa-volume-up"></i> Volume: <span id="volumeValue">100%</span></label>
+                            <input type="range" id="volumeRange" class="custom-range volume-range" min="0" max="1" step="0.05" value="1" oninput="updateSlider('volume')">
+                            <div class="range-labels"><span>Mute</span><span>Medium</span><span>Max</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Player Controls -->
+                <div class="tts-card player-card card-animate" style="animation-delay:0.2s">
+                    <div class="visualizer-container" id="visualizer">
+                        <canvas id="waveCanvas"></canvas>
+                    </div>
+                    <div class="player-controls">
+                        <button class="control-btn" onclick="skipBack()" title="Restart"><i class="fas fa-backward"></i></button>
+                        <button class="control-btn play-btn" id="playBtn" onclick="togglePlay()">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="control-btn" onclick="pauseSpeech()" title="Pause"><i class="fas fa-pause"></i></button>
+                        <button class="control-btn" onclick="stopSpeech()" title="Stop"><i class="fas fa-stop"></i></button>
+                        <button class="control-btn" onclick="downloadAudio()" title="Download"><i class="fas fa-download"></i></button>
+                    </div>
+                    <div class="now-playing" id="nowPlaying">
+                        <div class="playing-indicator">
+                            <span></span><span></span><span></span><span></span><span></span>
+                        </div>
+                        <span class="playing-text">Ready to speak...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI CHATBOT -->
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">
+            <div class="chatbot-title">
+                <i class="fas fa-robot"></i>
+                <span>Skyroot AI</span>
+                <span class="online-dot"></span>
+            </div>
+            <button class="chatbot-close" onclick="toggleChatbot()"><i class="fas fa-times"></i></button>
+        </div>
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="chat-message bot-message">
+                <div class="msg-avatar"><i class="fas fa-robot"></i></div>
+                <div class="msg-bubble">
+                    <p>Hello! I'm <strong>Skyroot AI</strong> — I can answer ANY question in ANY language! Ask me about science, history, math, coding, health, philosophy, or anything else. I also do translations, jokes, stories, and text-to-speech. What would you like to know? 🚀</p>
+                    <span class="msg-time">Just now</span>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-suggestions" id="chatSuggestions">
+            <button class="suggestion-chip" onclick="sendSuggestion('What is quantum physics?')">🔬 Science</button>
+            <button class="suggestion-chip" onclick="sendSuggestion('Translate how are you to Japanese')">🌍 Translate</button>
+            <button class="suggestion-chip" onclick="sendSuggestion('Tell me a joke in Urdu')">😂 Joke</button>
+            <button class="suggestion-chip" onclick="sendSuggestion('Explain AI in simple words')">💡 Explain</button>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="if(event.key==='Enter')sendMessage()">
+            <button class="send-btn" onclick="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Chatbot FAB -->
+    <button class="chatbot-fab" id="chatbotFab" onclick="toggleChatbot()">
+        <i class="fas fa-robot"></i>
+        <span class="fab-pulse"></span>
+    </button>
+
+    <!-- PRO VERSION MODAL -->
+    <div class="pro-modal-overlay" id="proModal" onclick="if(event.target===this)closeProModal()">
+        <div class="pro-modal">
+            <button class="pro-modal-close" onclick="closeProModal()"><i class="fas fa-times"></i></button>
+            <div class="pro-modal-header">
+                <i class="fas fa-crown pro-crown"></i>
+                <h2>Text to Voice <span class="pro-label">PRO</span></h2>
+                <p>Unlock the full power of voice</p>
+            </div>
+            <div class="pro-features">
+                <div class="pro-feature"><i class="fas fa-download"></i><div><h4>MP3 Download</h4><p>Download any voice as MP3 file</p></div></div>
+                <div class="pro-feature"><i class="fas fa-infinity"></i><div><h4>Unlimited Characters</h4><p>No 5000 character limit</p></div></div>
+                <div class="pro-feature"><i class="fas fa-robot"></i><div><h4>Skyroot AI Pro</h4><p>Advanced AI with deep knowledge</p></div></div>
+                <div class="pro-feature"><i class="fas fa-microphone-alt"></i><div><h4>All Voice Types</h4><p>Robot, Whisper, Echo & more</p></div></div>
+                <div class="pro-feature"><i class="fas fa-ban"></i><div><h4>No Ads</h4><p>Completely ad-free experience</p></div></div>
+                <div class="pro-feature"><i class="fas fa-headset"></i><div><h4>Priority Support</h4><p>24/7 dedicated support</p></div></div>
+            </div>
+            <div class="pro-pricing">
+                <div class="price-card">
+                    <h3>Monthly</h3>
+                    <div class="price">$4.99<span>/mo</span></div>
+                    <button class="btn-primary" onclick="activatePro('monthly')">Start Free Trial</button>
+                </div>
+                <div class="price-card popular">
+                    <span class="popular-tag">MOST POPULAR</span>
+                    <h3>Yearly</h3>
+                    <div class="price">$2.49<span>/mo</span></div>
+                    <div class="price-save">Save 50%</div>
+                    <button class="btn-primary" onclick="activatePro('yearly')">Start Free Trial</button>
+                </div>
+                <div class="price-card">
+                    <h3>Lifetime</h3>
+                    <div class="price">$49<span>once</span></div>
+                    <button class="btn-primary" onclick="activatePro('lifetime')">Get Lifetime</button>
+                </div>
+            </div>
+            <p class="pro-guarantee">7-day free trial · Cancel anytime · © Skyroot Company</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
